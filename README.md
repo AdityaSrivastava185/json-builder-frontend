@@ -30,8 +30,6 @@ A fully functional and recursive JSON schema builder built using **Next.js**, **
 - Choose the **Field Type** from the dropdown:
   - `string`
   - `number`
-  - `boolean`
-  - `array`
   - `nested` (creates a sub-object with its own key-value pairs)
 - For `nested` types:
   - A new nested field section will appear.

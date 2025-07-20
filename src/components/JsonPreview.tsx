@@ -10,20 +10,13 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
+import { nestedFieldProps } from "@/types/schema";
 
-interface Props {
-  fields: Field[];
-  updateField: (id: string, key: string, value: any) => void;
-  deleteField: (id: string) => void;
-  addField: (parentId?: string) => void;
-  parentId?: string;
-}
-
-export const FieldRenderer = ({ fields, updateField, deleteField, addField }: Props) => {
+export const FieldRenderer = ({ fields, updateField, deleteField, addField }: nestedFieldProps) => {
   return (
     <>
       {fields.map((field) => (
-        <Card key={field.id} className="p-4 mb-2 ml-4">
+        <Card key={field.id} className="p-4 mb-2">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-2">
             <Input
               value={field.key}
@@ -51,9 +44,11 @@ export const FieldRenderer = ({ fields, updateField, deleteField, addField }: Pr
             </Button>
 
             {field.type === "Nested" && (
-              <Button onClick={() => addField(field.id)} variant="default">
-                Add Nested Field
-              </Button>
+              <>
+                <Button onClick={() => addField(field.id)} variant="default">
+                  Add Nested Field
+                </Button>
+              </>
             )}
           </div>
 

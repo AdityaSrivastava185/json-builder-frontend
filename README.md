@@ -9,7 +9,7 @@ A fully functional and recursive JSON schema builder built using **Next.js**, **
 - ➕ Add or remove key-value fields
 - 🔁 Support for nested (recursive) JSON fields
 - 🧠 Real-time JSON preview (auto updates)
-- 🧩 Select data types for each field (string, number, boolean, array, nested)
+- 🧩 Select data types for each field (string, number, nested)
 - 💾 Clean, modular, and scalable architecture
 
 ---
@@ -23,10 +23,29 @@ A fully functional and recursive JSON schema builder built using **Next.js**, **
 
 ---
 
+## 📝 Usage
+
+- Click on **Add Field** to create a new key-value pair.
+- Enter the **Field Name** (e.g., `name`, `email`, `details`, etc.).
+- Choose the **Field Type** from the dropdown:
+  - `string`
+  - `number`
+  - `boolean`
+  - `array`
+  - `nested` (creates a sub-object with its own key-value pairs)
+- For `nested` types:
+  - A new nested field section will appear.
+  - You can continue adding/removing fields recursively.
+- The right side panel displays the **real-time generated JSON**.
+
+---
+
 ## 🧪 Getting Started
 
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/your-username/json-schema-builder.git
+   https://github.com/AdityaSrivastava185/json-builder-frontend
    cd json-schema-builder
+   npm install 
+   npm run dev

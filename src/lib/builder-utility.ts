@@ -1,59 +1,48 @@
+// app/components/schema-builder/utils.ts
 import { Field } from "@/types/schema";
 
 let idCounter = 0;
 export const generateId = () => `field-${idCounter++}`;
 
-export const updateFieldById = (
-  fields: Field[],
-  id: string,
-  key: keyof Field,
-  value: any
-): Field[] =>
-  fields.map((field) =>
-    field.id === id
-      ? { ...field, [key]: value }
-      : field.type === "Nested" && field.children
-      ? { ...field, children: updateFieldById(field.children, id, key, value) }
-      : field
-  );
-
-
-export const deleteFieldById = (fields: Field[], id: string): Field[] =>
-  fields
-    .filter((field) => field.id !== id)
-    .map((field) =>
-      field.type === "Nested" && field.children
-        ? { ...field, children: deleteFieldById(field.children, id) }
-        : field
-    );
-
-export const addNestedFieldById = (
-  fields: Field[],
-  parentId: string,
-  newField: Field
-): Field[] =>
-  fields.map((field) =>
-    field.id === parentId
-      ? {
-          ...field,
-          children: [...(field.children || []), newField],
-        }
-      : field.type === "Nested" && field.children
-      ? {
-          ...field,
-          children: addNestedFieldById(field.children, parentId, newField),
-        }
-      : field
-  );
-
-
-export const buildJsonSchema = (fields: Field[]): Record<string, any> => {
-  const result: Record<string, any> = {};
-  fields.forEach((field) => {
-    if (field.type === "String") result[field.key] = "";
-    else if (field.type === "Number") result[field.key] = 0;
-    else if (field.type === "Nested")
-      result[field.key] = buildJsonSchema(field.children || []);
+export const addNestedField = (nodes: Field[], parentId: string, newField: Field): Field[] => {
+  return nodes.map((node) => {
+    if (node.id === parentId) {
+      const children = node.children || [];
+      return { ...node, children: [...children, newField] };
+    } else if (node.type === "Nested" && node.children) {
+      return { ...node, children: addNestedField(node.children, parentId, newField) };
+    }
+    return node;
   });
-  return result;
+};
+
+export const updateNestedField = (nodes: Field[], id: string, key: string, value: any): Field[] => {
+  return nodes.map((node) => {
+    if (node.id === id) {
+      return { ...node, [key]: value };
+    } else if (node.type === "Nested" && node.children) {
+      return { ...node, children: updateNestedField(node.children, id, key, value) };
+    }
+    return node;
+  });
+};
+
+export const deleteNestedField = (nodes: Field[], id: string): Field[] => {
+  return nodes
+    .filter((node) => node.id !== id)
+    .map((node) =>
+      node.type === "Nested" && node.children
+        ? { ...node, children: deleteNestedField(node.children, id) }
+        : node
+    );
+};
+
+export const generateSchema = (fields: Field[]): any => {
+  const schema: any = {};
+  fields.forEach((field) => {
+    if (field.type === "String") schema[field.key] = "STRING";
+    else if (field.type === "Number") schema[field.key] = "INT";
+    else if (field.type === "Nested") schema[field.key] = generateSchema(field.children || []);
+  });
+  return schema;
 };

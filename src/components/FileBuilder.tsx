@@ -1,93 +1,71 @@
 "use client";
 
-import { Field, FieldType } from "@/types/schema";
-import { generateId, updateFieldById, deleteFieldById, addNestedFieldById } from "@/lib/builder-utility";
-
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card } from "@/components/ui/card";
-
 import { useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Field } from "@/types/schema";
+import {
+  addNestedField,
+  deleteNestedField,
+  generateId,
+  generateSchema,
+  updateNestedField
+} from "@/lib/builder-utility";
+import { FieldRenderer } from "@/components/JsonPreview"
 
-interface Props {
-  fields: Field[];
-  setFields: React.Dispatch<React.SetStateAction<Field[]>>;
-  parentId?: string;
-}
+export default function JsonSchemaBuilder() {
+  const [fields, setFields] = useState<Field[]>([]);
 
-export default function FieldBuilder({ fields, setFields, parentId }: Props) {
-  const handleAddField = (targetId?: string) => {
+  const addField = (parentId?: string) => {
     const newField: Field = {
       id: generateId(),
       key: "",
-      type: "String",
+      type: "String"
     };
 
-    if (!targetId) {
+    if (!parentId) {
       setFields([...fields, newField]);
     } else {
-      setFields((prev) => addNestedFieldById(prev, targetId, newField));
+      setFields(addNestedField(fields, parentId, newField));
     }
   };
 
-  const handleUpdateField = (id: string, key: keyof Field, value: any) => {
-    setFields((prev) => updateFieldById(prev, id, key, value));
+  const updateField = (id: string, key: string, value: any) => {
+    setFields(updateNestedField(fields, id, key, value));
   };
 
-  const handleDeleteField = (id: string) => {
-    setFields((prev) => deleteFieldById(prev, id));
+  const deleteField = (id: string) => {
+    setFields(deleteNestedField(fields, id));
   };
 
   return (
-    <>
-      {fields.map((field) => (
-        <Card key={field.id} className="p-4 mb-2 ml-4 border border-muted">
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-2">
-            <Input
-              value={field.key}
-              onChange={(e) => handleUpdateField(field.id, "key", e.target.value)}
-              placeholder="Field Name"
-              className="w-full md:w-[200px]"
-            />
+    <div className="p-6">
+      <Tabs defaultValue="builder">
+        <TabsList>
+          <TabsTrigger value="builder">Builder</TabsTrigger>
+          <TabsTrigger value="json">JSON Preview</TabsTrigger>
+        </TabsList>
 
-            <Select
-              value={field.type}
-              onValueChange={(val: FieldType) => handleUpdateField(field.id, "type", val)}
-            >
-              <SelectTrigger className="w-[120px]">
-                <SelectValue placeholder="Type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="String">String</SelectItem>
-                <SelectItem value="Number">Number</SelectItem>
-                <SelectItem value="Nested">Nested</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Button variant="outline" onClick={() => handleDeleteField(field.id)}>
-              Delete
+        <TabsContent value="builder">
+          <div className="mb-4">
+            <Button onClick={() => addField()} variant="default">
+              + Add Field
             </Button>
-
-            {field.type === "Nested" && (
-              <Button onClick={() => handleAddField(field.id)} variant="default">
-                + Add Nested Field
-              </Button>
-            )}
           </div>
+          <FieldRenderer
+            fields={fields}
+            updateField={updateField}
+            deleteField={deleteField}
+            addField={addField}
+          />
+        </TabsContent>
 
-          {/* Recursive call for nested children */}
-          {field.children && (
-            <FieldBuilder fields={field.children} setFields={(newChildren) =>
-              setFields((prev) =>
-                prev.map((f:any) =>
-                  f.id === field.id ? { ...f, children: newChildren } : f
-                )
-              )
-            } parentId={field.id} />
-          )}
-        </Card>
-      ))}
-    </>
+        <TabsContent value="json">
+          <pre className="bg-sidebar p-4 rounded overflow-auto text-sm">
+            {JSON.stringify(generateSchema(fields), null, 2)}
+          </pre>
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 }

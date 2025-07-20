@@ -3,11 +3,11 @@ import { NotesList } from '@/types/schema'
 
 const NoteList: React.FC<NotesList> = ({ highlightedText, normalText }) => {
     return (
-        <div>
-            <ul className="my-4">
+        <div className='ml-7'>
+            <ul className="list-disc">
                 <li>
-                    <p className="text-muted-foreground text-xs">
-                        <span className="font-italic text-xs text-foreground">{highlightedText}
+                    <p className="text-muted-foreground text-xs ">
+                        <span className="italic text-xs text-foreground">{highlightedText}
                         </span>{" "}{normalText}
                     </p>
                 </li>

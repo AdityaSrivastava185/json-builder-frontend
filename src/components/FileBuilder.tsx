@@ -12,6 +12,7 @@ import {
   updateNestedField
 } from "@/lib/builder-utility";
 import { FieldRenderer } from "@/components/JsonPreview"
+import HeroTitle from "./HeroTitle";
 
 export default function JsonSchemaBuilder() {
   const [fields, setFields] = useState<Field[]>([]);
@@ -39,7 +40,11 @@ export default function JsonSchemaBuilder() {
   };
 
   return (
-    <div className="p-6">
+    <div className="py-6">
+      <HeroTitle
+      title="Welcome to JSON Schema Builder"
+      description="Build your JSON schema visually with ease . Add , edit , and delete the fileds as nedded . Preview the json schema in real time "
+      />
       <Tabs defaultValue="builder">
         <TabsList>
           <TabsTrigger value="builder">Builder</TabsTrigger>

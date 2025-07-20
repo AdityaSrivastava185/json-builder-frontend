@@ -47,6 +47,14 @@ export default function JsonSchemaBuilder() {
         title="Welcome to JSON Schema Builder"
         description="Build your JSON schema visually with ease . Add , edit , and delete the fileds as nedded . Preview the json schema in real time "
       />
+      <NoteList
+        highlightedText="Add field button"
+        normalText="will add the button at the root level of the JSON schema"
+      />
+      <NoteList
+        highlightedText="Add nested field button"
+        normalText="will add the button at the root nested level of the root field in the JSON schema"
+      />
       <div className="mb-10">
         <SocialsButtons
           ButtonName="Check out on Github"
@@ -65,14 +73,6 @@ export default function JsonSchemaBuilder() {
               + Add Field
             </Button>
           </div>
-          <NoteList
-            highlightedText="Add field button"
-            normalText="will add the button at the root level of the JSON schema"
-          />
-          <NoteList
-            highlightedText="Add nested field button"
-            normalText="will add the button at the root nested level of the root field in the JSON schema"
-          />
           <FieldRenderer
             fields={fields}
             updateField={updateField}

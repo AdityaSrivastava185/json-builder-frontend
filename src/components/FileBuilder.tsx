@@ -1,17 +1,5 @@
 "use client";
-
-import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { Field } from "@/types/schema";
-import {
-  addNestedField,
-  deleteNestedField,
-  generateId,
-  generateSchema,
-  updateNestedField
-} from "@/lib/builder-utility";
-import { FieldRenderer } from "@/components/JsonPreview"
+import React from "react";
 import HeroTitle from "./HeroTitle";
 import SocialsButtons from "./SocialsButtons";
 import NoteList from "./NoteList";

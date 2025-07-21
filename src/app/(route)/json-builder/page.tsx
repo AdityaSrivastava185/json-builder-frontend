@@ -7,32 +7,32 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import React, { useState } from 'react'
 
 const page = () => {
-      const [fields, setFields] = useState<Field[]>([]);
-    
-      const addField = (parentId?: string) => {
-        const newField: Field = {
-          id: generateId(),
-          key: "",
-          type: "String"
-        };
-    
-        if (!parentId) {
-          setFields([...fields, newField]);
-        } else {
-          setFields(addNestedField(fields, parentId, newField));
-        }
-      };
-    
-      const updateField = (id: string, key: string, value: any) => {
-        setFields(updateNestedField(fields, id, key, value));
-      };
-    
-      const deleteField = (id: string) => {
-        setFields(deleteNestedField(fields, id));
-      };
+  const [fields, setFields] = useState<Field[]>([]);
+
+  const addField = (parentId?: string) => {
+    const newField: Field = {
+      id: generateId(),
+      key: "",
+      type: "String"
+    };
+
+    if (!parentId) {
+      setFields([...fields, newField]);
+    } else {
+      setFields(addNestedField(fields, parentId, newField));
+    }
+  };
+
+  const updateField = (id: string, key: string, value: any) => {
+    setFields(updateNestedField(fields, id, key, value));
+  };
+
+  const deleteField = (id: string) => {
+    setFields(deleteNestedField(fields, id));
+  };
   return (
     <div className='max-w-4xl mx-auto p-4'>
-       <Tabs defaultValue="builder" className="mt-7">
+      <Tabs defaultValue="builder" className="mt-7">
         <TabsList>
           <TabsTrigger value="builder" className="cursor-pointer">JSON Builder</TabsTrigger>
           <TabsTrigger value="json" className="cursor-pointer">JSON Preview</TabsTrigger>

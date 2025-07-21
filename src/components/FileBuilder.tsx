@@ -17,14 +17,14 @@ import SocialsButtons from "./SocialsButtons";
 import NoteList from "./NoteList";
 
 export default function JsonSchemaBuilder() {
-  
+
   return (
     <div className="py-6 flex flex-col items-center justify-center">
       <HeroTitle
         title="Welcome to JSON Schema Builder"
         description="Build your JSON schema visually with ease . Add , edit , and delete the fileds as nedded . Preview the json schema in real time "
       />
-      <div className="flex flex-row gap-10 items-center justify-center my-7">
+      <div className="flex flex-col md:flex-row gap-10 items-center justify-center my-7">
         <div className="md:mb-7">
           <SocialsButtons
             ButtonName="Check out on Github"

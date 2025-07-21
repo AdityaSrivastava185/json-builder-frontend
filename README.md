@@ -4,6 +4,15 @@ A fully functional and recursive JSON schema builder built using **Next.js**, **
 
 ---
 
+## Screenshots of the working project
+### JSON BUILDER
+![JSON Builder Preview](./public/build.png)
+
+### JSON PREVIEW
+![JSON Builder Preview](./public/preview.png)
+
+---
+
 ## ✨ Features
 
 - ➕ Add or remove key-value fields
@@ -40,10 +49,16 @@ A fully functional and recursive JSON schema builder built using **Next.js**, **
 
 ## 🧪 Getting Started
 
-1. **Clone the Repository**
+1. fork the repository
+2. clone the repostiory
+3. Install the dependencies
+```bash
+npm isntall
+```
+4. Run the server
+```bash
+npm run dev
+```
 
-   ```bash
-   https://github.com/AdityaSrivastava185/json-builder-frontend
-   cd json-schema-builder
-   npm install 
-   npm run dev
+---
+

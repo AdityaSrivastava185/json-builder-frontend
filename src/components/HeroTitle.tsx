@@ -6,9 +6,9 @@ const HeroTitle:React.FC<heroTitleProps> = ({
     description,
 }) => {
   return (
-    <div className='mt-10 mb-5'>
-        <h1 className="text-4xl font-bold mb-2 ">{title}</h1>
-        <p className="text-lg text-muted-foreground text-balance">{description}</p>
+    <div className='mt-10 mb-5 flex items-center justify-center flex-col text-center gap-2'>
+        <h1 className=" text-2xl md:text-4xl font-bold mb-2 ">{title}</h1>
+        <p className="md:text-lg text-muted-foreground text-balance">{description}</p>
     </div>
   )
 }

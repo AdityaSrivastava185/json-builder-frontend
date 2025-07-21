@@ -1,4 +1,3 @@
-// app/components/schema-builder/utils.ts
 import { Field } from "@/types/schema";
 
 let idCounter = 0;

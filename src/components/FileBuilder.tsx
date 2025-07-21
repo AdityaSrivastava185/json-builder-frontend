@@ -17,30 +17,7 @@ import SocialsButtons from "./SocialsButtons";
 import NoteList from "./NoteList";
 
 export default function JsonSchemaBuilder() {
-  const [fields, setFields] = useState<Field[]>([]);
-
-  const addField = (parentId?: string) => {
-    const newField: Field = {
-      id: generateId(),
-      key: "",
-      type: "String"
-    };
-
-    if (!parentId) {
-      setFields([...fields, newField]);
-    } else {
-      setFields(addNestedField(fields, parentId, newField));
-    }
-  };
-
-  const updateField = (id: string, key: string, value: any) => {
-    setFields(updateNestedField(fields, id, key, value));
-  };
-
-  const deleteField = (id: string) => {
-    setFields(deleteNestedField(fields, id));
-  };
-
+  
   return (
     <div className="py-6 flex flex-col items-center justify-center">
       <HeroTitle
